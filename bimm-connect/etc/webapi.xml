@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <!-- Public endpoints -->
+    <route url="/V1/bimm/health" method="GET">
+        <service class="BIMM\Connect\Api\HealthInterface" method="check"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/bimm/version-manifest" method="GET">
+        <service class="BIMM\Connect\Api\VersionManifestInterface" method="get"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <!-- Authenticated endpoints (Bearer token) -->
+    <route url="/V1/bimm/me" method="GET">
+        <service class="BIMM\Connect\Api\MeInterface" method="get"/>
+        <resources>
+            <resource ref="BIMM_Connect::api"/>
+        </resources>
+    </route>
+
+    <route url="/V1/bimm/products" method="GET">
+        <service class="BIMM\Connect\Api\ProductsInterface" method="list"/>
+        <resources>
+            <resource ref="BIMM_Connect::api"/>
+        </resources>
+    </route>
+
+    <route url="/V1/bimm/products/:id" method="GET">
+        <service class="BIMM\Connect\Api\ProductsInterface" method="get"/>
+        <resources>
+            <resource ref="BIMM_Connect::api"/>
+        </resources>
+    </route>
+
+    <route url="/V1/bimm/categories" method="GET">
+        <service class="BIMM\Connect\Api\CategoriesInterface" method="list"/>
+        <resources>
+            <resource ref="BIMM_Connect::api"/>
+        </resources>
+    </route>
+
+    <route url="/V1/bimm/search" method="GET">
+        <service class="BIMM\Connect\Api\SearchInterface" method="search"/>
+        <resources>
+            <resource ref="BIMM_Connect::api"/>
+        </resources>
+    </route>
+
+    <route url="/V1/bimm/family/:id/download" method="GET">
+        <service class="BIMM\Connect\Api\DownloadInterface" method="download"/>
+        <resources>
+            <resource ref="BIMM_Connect::api"/>
+        </resources>
+    </route>
+
+    <route url="/V1/bimm/events" method="POST">
+        <service class="BIMM\Connect\Api\EventsInterface" method="ingest"/>
+        <resources>
+            <resource ref="BIMM_Connect::api"/>
+        </resources>
+    </route>
+
+    <!-- OAuth endpoints (handled by controllers, not service contracts) -->
+    <route url="/V1/bimm/oauth/token" method="POST">
+        <service class="BIMM\Connect\Api\OAuthInterface" method="token"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/bimm/oauth/refresh" method="POST">
+        <service class="BIMM\Connect\Api\OAuthInterface" method="refresh"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/bimm/oauth/revoke" method="POST">
+        <service class="BIMM\Connect\Api\OAuthInterface" method="revoke"/>
+        <resources>
+            <resource ref="BIMM_Connect::api"/>
+        </resources>
+    </route>
+
+</routes>

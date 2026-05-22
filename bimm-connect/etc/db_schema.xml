@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <table name="bimm_event" resource="default" engine="innodb" comment="BIMModeller analytics events">
+        <column xsi:type="bigint" name="event_id" unsigned="true" nullable="false" identity="true" comment="Event ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="true" comment="Magento customer ID"/>
+        <column xsi:type="varchar" name="install_id" length="36" nullable="false" comment="Plugin install UUID"/>
+        <column xsi:type="varchar" name="event_type" length="64" nullable="false" comment="Event type slug"/>
+        <column xsi:type="text" name="payload" nullable="false" comment="JSON event payload"/>
+        <column xsi:type="varchar" name="revit_version" length="16" nullable="true" comment="Revit version string"/>
+        <column xsi:type="varchar" name="plugin_version" length="16" nullable="true" comment="Plugin version string"/>
+        <column xsi:type="timestamp" name="created_at" default="CURRENT_TIMESTAMP" comment="Insertion timestamp"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="event_id"/>
+        </constraint>
+        <index referenceId="IDX_BIMM_EVENT_CUSTOMER_CREATED" indexType="btree">
+            <column name="customer_id"/>
+            <column name="created_at"/>
+        </index>
+        <index referenceId="IDX_BIMM_EVENT_TYPE_CREATED" indexType="btree">
+            <column name="event_type"/>
+            <column name="created_at"/>
+        </index>
+        <index referenceId="IDX_BIMM_EVENT_INSTALL" indexType="btree">
+            <column name="install_id"/>
+        </index>
+    </table>
+
+    <table name="bimm_oauth_token" resource="default" engine="innodb" comment="BIMModeller OAuth tokens">
+        <column xsi:type="bigint" name="token_id" unsigned="true" nullable="false" identity="true" comment="Token ID"/>
+        <column xsi:type="char" name="token_hash" length="64" nullable="false" comment="SHA-256 hash of access token"/>
+        <column xsi:type="char" name="refresh_token_hash" length="64" nullable="false" comment="SHA-256 hash of refresh token"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="false" comment="Magento customer ID"/>
+        <column xsi:type="varchar" name="scope" length="128" nullable="false" comment="OAuth scope string"/>
+        <column xsi:type="timestamp" name="expires_at" nullable="false" comment="Access token expiry"/>
+        <column xsi:type="timestamp" name="created_at" default="CURRENT_TIMESTAMP" comment="Issuance timestamp"/>
+        <column xsi:type="timestamp" name="revoked_at" nullable="true" comment="Revocation timestamp, null if active"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="token_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="UNQ_BIMM_TOKEN_HASH">
+            <column name="token_hash"/>
+        </constraint>
+        <index referenceId="IDX_BIMM_TOKEN_CUSTOMER" indexType="btree">
+            <column name="customer_id"/>
+        </index>
+    </table>
+
+    <table name="bimm_subscription_tier_config" resource="default" engine="innodb" comment="Subscription tier configuration">
+        <column xsi:type="int" name="tier_id" unsigned="true" nullable="false" identity="true" comment="Tier ID"/>
+        <column xsi:type="int" name="customer_group_id" unsigned="true" nullable="false" comment="Magento customer group ID"/>
+        <column xsi:type="varchar" name="code" length="32" nullable="false" comment="Tier code (lite, essential, pro)"/>
+        <column xsi:type="varchar" name="name" length="64" nullable="false" comment="Display name"/>
+        <column xsi:type="int" name="monthly_load_limit" nullable="true" comment="Monthly family load limit, NULL = unlimited"/>
+        <column xsi:type="varchar" name="upgrade_url" length="512" nullable="true" comment="Upgrade pricing page URL"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="tier_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="UNQ_BIMM_TIER_CODE">
+            <column name="code"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="UNQ_BIMM_TIER_GROUP">
+            <column name="customer_group_id"/>
+        </constraint>
+    </table>
+
+</schema>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="BIMM_Connect::insights" title="BIMModeller Insights Dashboard" sortOrder="100"/>
+            </resource>
+            <resource id="Magento_Webapi::resources">
+                <resource id="BIMM_Connect::api" title="BIMModeller API" description="Access to BIMM REST API endpoints"/>
+            </resource>
+        </resources>
+    </acl>
+</config>

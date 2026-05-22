@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Health endpoint -->
+    <preference for="BIMM\Connect\Api\HealthInterface"
+                type="BIMM\Connect\Model\Api\Health"/>
+
+    <!-- OAuth -->
+    <preference for="BIMM\Connect\Api\OAuthInterface"
+                type="BIMM\Connect\Model\Api\OAuth"/>
+
+    <!-- Catalog -->
+    <preference for="BIMM\Connect\Api\ProductsInterface"
+                type="BIMM\Connect\Model\Api\Products"/>
+    <preference for="BIMM\Connect\Api\CategoriesInterface"
+                type="BIMM\Connect\Model\Api\Categories"/>
+    <preference for="BIMM\Connect\Api\SearchInterface"
+                type="BIMM\Connect\Model\Api\Search"/>
+
+    <!-- Downloads + events -->
+    <preference for="BIMM\Connect\Api\DownloadInterface"
+                type="BIMM\Connect\Model\Api\Download"/>
+    <preference for="BIMM\Connect\Api\EventsInterface"
+                type="BIMM\Connect\Model\Api\Events"/>
+    <preference for="BIMM\Connect\Api\MeInterface"
+                type="BIMM\Connect\Model\Api\Me"/>
+    <preference for="BIMM\Connect\Api\VersionManifestInterface"
+                type="BIMM\Connect\Model\Api\VersionManifest"/>
+
+</config>
